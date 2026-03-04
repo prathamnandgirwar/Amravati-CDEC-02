@@ -1,237 +1,230 @@
-Day 9: Managing Users and Permissions in Linux
-Overview of User and Permission Management
+# Day 9: Managing Users and Permissions in Linux
+
+## Overview of User and Permission Management
 User and permission management is essential for securing a Linux system and controlling access to resources. This involves creating, modifying, and managing users, groups, and permissions to ensure proper access control.
 
-Practical:
-Identify the current user:
+## Practical
+
+### Identify the current user
+```bash
 whoami
-
-View all users on the system:
+View all users on the system
 cat /etc/passwd
-
-User Administration:
-
+User Administration
 1. User
- A user is a person who utilizes computer or network services.
- Linux is secured because one user can’t access the files of another user without permission.
 
-2. Types of User
+A user is a person who utilizes computer or network services.
+Linux is secured because one user can’t access the files of another user without permission.
 
-1) Super User
- Super user / Root user
- Those who have root privileges and have access to the entire OS.
+2. Types of Users
+1) Super User (Root User)
+
+Has root privileges and full access to the OS
+
 Shell used: /bin/bash
+
 UID: 0
 
 2) System User
- Normal user account created during installation.
- System user accounts are created automatically.
+
+Created automatically during installation
+
+Used by system services
+
 Shell used: /sbin/nologin
+
 UID: 1–999
-This account has moderate privileges.
+
+Has moderate privileges
 
 3) Standard User
- Also known as local user account.
- This account is used for users who need to work on the server and require limited access.
+
+Also known as local user
+
+Used for day-to-day server work
+
+Limited privileges
+
 Shell used: /bin/bash
+
 UID: 1000–60000+
 
-User Related Files:
-1.) /etc/passwd 
-2.) /etc/shadow 
+User Related Files
 
-Group Related Files:
-1.) /etc/group  
-2.) /etc/gshadow
+/etc/passwd
 
-When a user is created, there are four main user administration related files, along with home directory and skeleton (skel) files.
+/etc/shadow
 
-1.) /etc/passwd (7)
-    → It stores user profile–related information.
+Group Related Files
 
-2.) /etc/shadow (9)
-    → It stores user password policies.
+/etc/group
 
-3.) /etc/group (4)
-    → It stores group-related information for each account.
+/etc/gshadow
 
-4.) /etc/gshadow (4)
-    → It stores group password and members list.
+Files Created When a User Is Created
 
-5.) Home directory & mail account of new user
-    → /home/<user_name>  &&  /var/spool/mail
+/etc/passwd (7 fields)
+→ Stores user profile information
 
-6.) Skeleton files
-    → Stored in /etc/skel
-    → Files from /etc/skel are copied to the user’s home directory.
-    → Skeleton files mean profile files of user.
+/etc/shadow (9 fields)
+→ Stores encrypted passwords and password policies
 
+/etc/group (4 fields)
+→ Stores group-related information
+
+/etc/gshadow (4 fields)
+→ Stores group passwords and members list
+
+Home directory & mail account
+→ /home/<username> and /var/spool/mail
+
+Skeleton files
+→ Stored in /etc/skel
+→ Copied to user’s home directory
+→ Default profile files
+
+Skeleton Files Explanation
 .bash_logout
-→ It executes when the user logs out from the system.
+
+Executes when user logs out
 
 .bash_profile
-→ Executes at first-time login in shell.
-→ It sources from .bashrc.
-→ Used to set aliases and environment variables for the user.
+
+Executes at first login
+
+Sources .bashrc
+
+Used for environment variables and aliases
 
 .bashrc
-→ This file sources from /etc/bashrc.
-→ Used to set aliases.
-→ This file is sourced by .bash_profile.
+
+Sources /etc/bashrc
+
+Used for aliases
+
+Loaded for every shell
 
 .bash_history
-→ Stores command history.
-→ File is created after once logout & login.
-→ It is NOT copied from /etc/skel while creating a new user account.
+
+Stores command history
+
+Created after logout & login
+
+NOT copied from /etc/skel
 
 Using useradd Command
-The useradd command creates new user accounts.
-
-Syntax:
+Syntax
 useradd [options] username
+Options
 
-Options:
--m: Create a home directory for the user.
--s: Specify the default shell.
--G: Add the user to supplementary groups.
+-m → Create home directory
 
-Practical:
-Add a new user:
+-s → Specify shell
+
+-G → Add to supplementary groups
+
+Practical: Add User
 sudo useradd -m -s /bin/bash john
-
-Verify the user:
+Verify User
 id john
-
-# su - <user_name>      → To switch the user
-
-Setting User Passwords
-Set or change a user password using the passwd command.
-
-Practical:
-Set a password for a user:
+Switch User
+su - john
+Setting User Password
 sudo passwd john
+/etc/passwd Fields
 
-Test login with the new credentials.
+Username
 
-/etc/passwd   :- Fields present in this file
-1. Username  
-2. Linked password  
-3. UID  
-4. GID  
-5. Comment  
-6. Home Directory  
-7. Shell.
+Linked password
+
+UID
+
+GID
+
+Comment
+
+Home directory
+
+Shell
 
 Managing User Groups
-Groups simplify permission management by categorizing users.
+Commands
 
-Commands:
-groupadd: Create a new group.
-usermod -aG: Add a user to a group.
-groups: Display groups a user belongs to.
+groupadd → Create group
 
-Practical:
-Create a new group:
+usermod -aG → Add user to group
+
+groups → Show groups
+
+Practical
 sudo groupadd developers
-
-Add a user to the group:
 sudo usermod -aG developers john
-
-Verify group membership:
 groups john
-Sudo cat /etc/group | grep developers
-
+cat /etc/group | grep developers
 Removing Users
-Delete a user account using the userdel command.
-
-Practical:
-Remove a user:
+Remove User
 sudo userdel john
-
-Remove a user and their home directory:
+Remove User with Home Directory
 sudo userdel -r john
+Affected System Files
 
-Introduction to Affected Files
-Several system files are affected during user and permission management:
+/etc/passwd → User details
 
-/etc/passwd: Stores user account details.
-/etc/shadow: Stores encrypted passwords.
-/etc/group: Stores group details.
+/etc/shadow → Passwords
 
-Practical:
-View the contents of /etc/passwd:
+/etc/group → Group details
+
+Practical
 cat /etc/passwd
-
-Check group details:
 cat /etc/group
-
 User Home Directories
-Each user has a dedicated home directory for personal files, typically located in /home/username.
-
-Practical:
-View a user’s home directory:
 ls /home
-
-Access another user’s home directory (as root):
 sudo ls /home/john
-
-Switching Between Users in Linux
-Switching users is necessary for testing or administrative tasks.
-
-Using su Command
-The su command switches to another user account.
-
-Practical:
-Switch to another user:
+Switching Between Users
+Using su
 su john
-
-Return to the previous user:
 exit
-
-Using sudo Command
-The sudo command allows running commands as another user, typically root.
-
-Practical:
-Run a command as root:
+Using sudo
 sudo apt update
-
-Verify sudo privileges:
 sudo -l
+🔐 sudoers File
+Location
 
-🔐 What is the sudoers file?
-The sudoers file controls who can run what commands as root (or another user) using sudo.
-
-File location:
 /etc/sudoers
 
-Purpose:
-Allow selected users/groups to run privileged commands without sharing the root password.
-sudoers decides who can become root, for which command, and from where.
+Purpose
 
-Sudoers file format:
-user  host=(run_as_user)  command
+Controls who can run commands as root
 
-Example:
+Avoids sharing root password
+
+Defines who, what, and from where
+
+Format
+user host=(run_as_user) command
+Examples
 labex ALL=(ALL) ALL
 user1 ALL=(ALL) NOPASSWD: ALL
+Meaning
 
-Meaning:
 labex → user
-ALL → from any host
-(ALL) → can act as any user (root)
-ALL → can run all commands
 
-Example:
+ALL → any host
+
+(ALL) → any user (root)
+
+ALL → all commands
+
+sudo Demo
 useradd -m student1
 passwd student1
 id student1
 su - student1
 sudo ls /root
-
-Sudo Visudo
+visudo Entry
 student1 ALL=(ALL) ALL
 su - student1
 sudo ls /root
+Explanation for Students
 
-Explain to students:
-This user is now a sudo admin, almost like root
+This user is now a sudo admin, almost like the root user.
