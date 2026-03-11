@@ -1,441 +1,534 @@
-Introduction to Search and Filter Utilities
+# Introduction to Search and Filter Utilities
 
 Search and filter utilities are essential tools in Linux for processing and analyzing text data.  
-They allow DevOps engineers to efficiently locate, manipulate, and extract information from files and command outputs.
-
- 🔹 What Are Search and Filter Utilities?
-- Search : Find specific patterns or content within files  
--  Filter : Extract, sort, or modify data streams  
-
-
- 🔹 Common Use Cases
-- Analyzing log files for errors  
-- Extracting specific data from reports  
-- Finding configuration issues  
+They allow DevOps engineers to efficiently **locate, manipulate, and extract information** from files and command outputs.
 
 ---
 
- Overview of Key Utilities: grep, cat, sort, uniq
+# 🔹 What Are Search and Filter Utilities?
 
- 🔹 grep
--  Purpose : Search for patterns in files or input streams  
-- Key Features : Regular expressions, case-insensitive search, line numbers  
-- Use Case : Find specific text in logs or code files  
+- **Search** → Find specific patterns or content within files  
+- **Filter** → Extract, sort, or modify data streams  
 
- 🔹 cat
-- Purpose : Concatenate and display file contents  
-- Key Features : Display files, combine multiple files, show line numbers  
-- Use Case : View file contents, create new files from input  
+---
 
- 🔹 sort
-- **Purpose**: Sort lines of text files or input streams  
-- **Key Features**: Alphabetical/numerical sorting, reverse order, unique sorting  
-- **Use Case**: Organize data, remove duplicates, prepare reports  
+# 🔹 Common Use Cases
 
- 🔹 uniq
-- **Purpose**: Remove duplicate lines from sorted input  
-- **Key Features**: Show only unique lines, count occurrences, compare adjacent lines  
-- **Use Case**: Clean data, identify duplicates, generate summaries  
+- Analyzing **log files for errors**
+- Extracting **specific data from reports**
+- Finding **configuration issues**
 
+---
 
- Read Files Using cat, uniq, and sort
+# Overview of Key Utilities
 
-These utilities work together to read, process, and organize file contents.
+## 🔹 grep
 
- 🔹 Using cat to Read Files
+**Purpose:** Search for patterns in files or input streams
 
- Basic file reading:
+**Key Features**
+- Regular expressions
+- Case-insensitive search
+- Line numbers
 
+**Use Case**
+- Find specific text in logs or code files
+
+Example:
+
+```bash
+grep "error" logfile.txt
+```
+
+---
+
+## 🔹 cat
+
+**Purpose:** Concatenate and display file contents
+
+**Key Features**
+- Display files
+- Combine multiple files
+- Show line numbers
+
+**Use Case**
+- View file contents
+- Create new files from input
+
+Example:
+
+```bash
 cat file.txt
+```
 
-**Output:** Displays entire file content
+---
 
- Read multiple files:
+## 🔹 sort
 
-cat file1.txt file2.txt
+**Purpose:** Sort lines of text files or input streams
 
+**Key Features**
+- Alphabetical sorting
+- Numerical sorting
+- Reverse order
+- Unique sorting
 
- Show line numbers:
+**Use Case**
+- Organize data
+- Remove duplicates
+- Prepare reports
 
-cat -n file.txt
+Example:
 
-**Output:**
-
-     1  First line
-     2  Second line
-     3  Third line
-
-
- 🔹 Using sort to Organize Content
-
-Basic alphabetical sort:
-
+```bash
 sort file.txt
+```
 
-**Output:** Lines sorted A-Z
+---
 
-Numerical sort:
+## 🔹 uniq
 
+**Purpose:** Remove duplicate lines from sorted input
+
+**Key Features**
+- Show only unique lines
+- Count occurrences
+- Compare adjacent lines
+
+**Use Case**
+- Clean data
+- Identify duplicates
+- Generate summaries
+
+Example:
+
+```bash
+uniq file.txt
+```
+
+---
+
+# Read Files Using cat, sort, and uniq
+
+These utilities work together to **read, process, and organize file contents**.
+
+---
+
+# 🔹 Using cat to Read Files
+
+### Basic File Reading
+
+```bash
+cat file.txt
+```
+
+Output: Displays entire file content
+
+---
+
+### Read Multiple Files
+
+```bash
+cat file1.txt file2.txt
+```
+
+---
+
+### Show Line Numbers
+
+```bash
+cat -n file.txt
+```
+
+Example Output:
+
+```
+1  First line
+2  Second line
+3  Third line
+```
+
+---
+
+# 🔹 Using sort to Organize Content
+
+### Basic Alphabetical Sort
+
+```bash
+sort file.txt
+```
+
+Output: Lines sorted **A → Z**
+
+---
+
+### Numerical Sort
+
+```bash
 sort -n numbers.txt
+```
 
-**Input:**
+Input:
 
+```
 10
 2
 1
+```
 
-**Output:**
+Output:
+
 ```
 1
 2
 10
 ```
 
-Reverse sort:
+---
 
+### Reverse Sort
+
+```bash
 sort -r file.txt
 ```
-**Output:** Z-A order
+
+Output: **Z → A order**
 
 ---
 
-🔹 Using uniq to Remove Duplicates
+# 🔹 Using uniq to Remove Duplicates
 
-uniq` requires sorted input to work properly.
+`uniq` requires **sorted input** to work properly.
 
-Remove duplicate lines:
+### Remove Duplicate Lines
 
+```bash
 sort file.txt | uniq
+```
 
-**Input:**
+Input:
 
+```
 apple
 banana
 apple
 cherry
+```
 
-**Output:**
+Output:
 
+```
 apple
 banana
 cherry
+```
 
+---
 
+### Count Occurrences
 
-
-Count occurrences:
-
+```bash
 sort file.txt | uniq -c
+```
 
+Output:
 
-**Output:**
+```
+2 apple
+1 banana
+1 cherry
+```
 
-      2 apple
-      1 banana
-      1 cherry
+---
 
+### Show Only Duplicates
 
- Show only duplicates:
-
+```bash
 sort file.txt | uniq -d
+```
 
-**Output:**
+Output:
 
+```
 apple
+```
 
+---
 
-Show only unique lines:
+### Show Only Unique Lines
 
+```bash
 sort file.txt | uniq -u
+```
 
-**Output:**
+Output:
 
+```
 banana
 cherry
-
-
- Introduction to the find Utility
-
-
-`find` is a powerful command-line utility for searching files and directories based on various criteria.
-
-
-
-
-
-
-
- 🔹 find vs Other Search Tools
-
-- **locate**: Fast database search (requires updatedb)  
-
-- **which**: Find executable files in PATH  
-
-- **whereis**: Find binaries, sources, manuals  
-
-- **find**: Comprehensive search with full control  
-
+```
 
 ---
 
+# Introduction to the find Utility
 
-Basic Syntax of find
+`find` is a powerful command-line utility used to **search files and directories based on various criteria**.
 
+---
 
-🔹 Syntax Structure
+# 🔹 find vs Other Search Tools
 
+| Tool | Purpose |
+|-----|--------|
+| locate | Fast database search (requires `updatedb`) |
+| which | Find executable files in PATH |
+| whereis | Find binaries, sources, manuals |
+| find | Comprehensive search with full control |
 
+---
+
+# Basic Syntax of find
+
+```bash
 find [path] [expression]
+```
 
+- **path** → Starting directory (default: current directory)
+- **expression** → Search criteria and actions
 
--  path : Starting directory (default: current directory)  
+---
 
--  expression : Search criteria and actions  
+# 🔹 Basic Examples
 
+### Find All Files in Current Directory
 
- 🔹 Basic Examples
-
-
- Find all files in current directory:
-
+```bash
 find .
+```
 
+Lists all files and subdirectories recursively.
 
-**Output:** Lists all files and subdirectories recursively
+---
 
+### Find Files in Specific Directory
 
-
-
-
-Find files in specific directory:
-
+```bash
 find /home/labex/project
+```
 
+---
 
- Find files with specific name:
+### Find File by Name
 
+```bash
 find . -name "file.txt"
+```
 
+---
 
- Case-insensitive name search:
+### Case-Insensitive Search
 
+```bash
 find . -iname "FILE.txt"
+```
 
 ---
 
+# Advanced Usage and Filtering Options
 
-Advanced Usage and Filtering Options
+## 🔹 Filter by Type
 
+```bash
+find . -type f     # Files only
+find . -type d     # Directories only
+find . -type l     # Symbolic links
+```
 
-🔹 Filtering by Type
+---
 
+## 🔹 Filter by Name Pattern
 
-find . -type f    # Files only
+```bash
+find . -name "*.txt"
+find . -iname "*.TXT"
+```
 
-find . -type d    # Directories only
+---
 
-find . -type l    # Symbolic links only
+## 🔹 Filter by Size
 
+```bash
+find . -size +100M
+find . -size -1k
+find . -size 10M
+find . -size +1G
+find . -size -2G
+find . -size 1G
+```
 
+Meaning of symbols:
 
-🔹 Filtering by Name Patterns
+| Symbol | Meaning |
+|------|---------|
+| + | Greater than |
+| - | Less than |
+| none | Exact size |
 
+---
 
-find . -name "*.txt"        # Exact match
+## 🔹 Filter by Time
 
-find . -iname "*.TXT"       # Case-insensitive
+```bash
+find . -mtime -7
+find . -mtime +30
+find . -mtime 7
+```
 
+Meaning:
 
-🔹 Filtering by Size
+- `-7` → Modified in last 7 days  
+- `+30` → Modified more than 30 days ago  
+- `7` → Modified exactly 7 days ago  
 
+---
 
-find . -size +100M     # Larger than 100 MB
-find . -size -1k       # Smaller than 1 KB
-find . -size 10M       # Exactly 10 MB
-find . -size +1G       # Larger than 1 GB
-find . -size -2G       # Smaller than 2 GB
-find . -size 1G        # Exactly 1 GB
-Meaning of Symbols
-+ → greater than
+## 🔹 Combining Filters
 
+```bash
+find . -name "*.log" -mtime -7
+```
 
-- → less than
+Find `.log` files modified in the **last 7 days**.
 
+---
 
-no symbol → exact size
+# Practical Examples
 
+## 🔹 Find by Name
 
-
-🔹 Filtering by Time
-
-
-find . -mtime -7            # Modified in last 7 days
-
-find . -mtime +30           # Modified more than 30 days ago
-
-find . -mtime 7             # Modified exactly 7 days ago
-
-
- 🔹 Combining Filters with Operators
-
-find . -name "*.log" -mtime -7    
-
-Practical Examples of Finding Files by Name, Type, Size, and Modification Date
-
-
-🔹 By Name
-
-Find all .txt files:
-
+```bash
 find /home -name "*.txt"
+```
 
- 🔹 By Type
+---
 
+## 🔹 Find by Type
 
-Find all regular files:
-
+```bash
 find . -type f
-
-
-Find all directories:
-
 find . -type d
-
-
- Find all symbolic links:
-
 find . -type l
-
+```
 
 ---
 
+## 🔹 Find by Size
 
-🔹 By Size
-
-
-Find files larger than 1GB:
-
+```bash
 find . -type f -size +1G
-
-
-Find files smaller than 100KB:
-
 find . -type f -size -100k
-
-
- Find files exactly 1MB:
-
 find . -type f -size 1M
-
-
-
-
-
-
-
-🔹 By Modification Date
-
-
- Find files modified in last 24 hours:
-
-find . -type f -mtime -1
-
-
- Find files modified more than 30 days ago:
-
-find . -type f -mtime +30
-
- Find files accessed in last hour:
-
-find . -type f -amin -60
-
-
- Find files owned by specific user:
-
-
-find . -user pratham
-
-
-Find empty files and directories:
-
-find . -empty
-
-
-
-Shortcuts
-
-
- grep :-  searches for patterns in text  
-
- cat :-  displays and concatenates files  
-
- sort :-  organizes lines alphabetically/numerically  
-
- uniq :- removes duplicates from sorted input  
-
- find :- locates files by name, type, size, date, permissions  
-
- Combine utilities with pipes for powerful data processing  
-
+```
 
 ---
 
+## 🔹 Find by Modification Date
 
-📝 Quick Reference: Search and Filter Commands
+```bash
+find . -type f -mtime -1
+find . -type f -mtime +30
+```
 
+---
 
+### Files Accessed in Last Hour
 
-# GREP - Search Patterns
+```bash
+find . -type f -amin -60
+```
 
-grep "pattern" file.txt              # Basic search
+---
 
-grep -i "pattern" file.txt           # Case-insensitive
+### Find Files Owned by User
 
-grep -n "pattern" file.txt           # Show line numbers
+```bash
+find . -user pratham
+```
 
-grep -v "pattern" file.txt           # Invert match
+---
 
+### Find Empty Files and Directories
 
-# CAT - Display Files
+```bash
+find . -empty
+```
 
-cat file.txt                         # Display file
+---
 
-cat -n file.txt                      # With line numbers
+# Shortcuts
 
+| Command | Purpose |
+|-------|---------|
+| grep | Searches patterns in text |
+| cat | Displays and concatenates files |
+| sort | Organizes lines alphabetically or numerically |
+| uniq | Removes duplicates from sorted input |
+| find | Locates files by name, type, size, date |
 
+💡 Combine utilities with **pipes (`|`)** for powerful data processing.
 
-# SORT - Sort Lines
+---
 
-sort file.txt                        # Alphabetical sort
+# 📝 Quick Reference: Search and Filter Commands
 
-sort -n numbers.txt                  # Numerical sort
+## GREP – Search Patterns
 
-sort -r file.txt                     # Reverse sort
+```bash
+grep "pattern" file.txt
+grep -i "pattern" file.txt
+grep -n "pattern" file.txt
+grep -v "pattern" file.txt
+```
 
-sort -u file.txt                     # Unique sort
+---
 
+## CAT – Display Files
 
-# UNIQ - Remove Duplicates
+```bash
+cat file.txt
+cat -n file.txt
+```
 
-uniq file.txt                        # Remove duplicates
+---
 
-uniq -c file.txt                     # Count occurrences
+## SORT – Sort Lines
 
-uniq -d file.txt                     # Show duplicates only
+```bash
+sort file.txt
+sort -n numbers.txt
+sort -r file.txt
+sort -u file.txt
+```
 
-uniq -u file.txt                     # Show unique only
+---
 
+## UNIQ – Remove Duplicates
 
-# FIND - Locate Files
+```bash
+uniq file.txt
+uniq -c file.txt
+uniq -d file.txt
+uniq -u file.txt
+```
 
-find . -name "*.txt"                 # By name
+---
 
-find . -type f                       # Files only
+## FIND – Locate Files
 
-find . -type d                       # Directories only
-
-find . -size +1M                     # Larger than 1MB
-
-find . -mtime -7                     # Modified last 7 days
-
-
+```bash
+find . -name "*.txt"
+find . -type f
+find . -type d
+find . -size +1M
+find . -mtime -7
+```
